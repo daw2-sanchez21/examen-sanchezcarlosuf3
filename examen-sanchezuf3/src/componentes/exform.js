@@ -24,23 +24,29 @@ export const exform = {
      <button type="submit" id="Id-boton" class="btn btn-primary">Submit</button>
      </div>
      <div class="col-6">
-   </form><div><div id="ficha"><h3>Datos del jugador</h3><ul id="datos"></ul></div><table><tr id="table-id"></tr></table>
+   </form><div><div id="ficha"><h3>Cerveza</h3><ul id="datos"></ul></div><table><tr id="table-id"></tr></table>
    </div>
-
-   <div class="container-fluid">
-   <div class="row col-12">
-   <div class="col-2 bg-dark">Holas</div>
+    </div>
+   <div class="container-fluid mt-4">
+   <h1>Esto es lo que has tomado ya ... </h1>
+   <div class="row col-12 border-bottom">
+   <div class="col-3 bg-primary"><h5>Cervezas</h5></div>
+   <div class="col-3 bg-primary"><h5>Cantidad</h5></div>
+   <div class="col-3 bg-primary">Holas</div>
+   <div class="col-3 bg-primary">Holas</div>
    </div></div`,
    script: ()=>{
-    console.log(cervezas);
+    //console.log(cervezas);
     const arraycervezas=[];
-    cervezas.forEach(c =>{
-        const cont = 0;
-        arraycervezas[cont]=c;
-        console.log(arraycervezas[cont]);
-        cont=cont+1;
-    })
+    
+    
 
+    for(var i=0; i<=4; i++){
+        arraycervezas[i]=cervezas[i];
+        console.log(arraycervezas);
+    }
+
+    
     console.log('Vista prueba cargada');
     const select = document.querySelector('#Id-select');
     const arraydatos=[];
