@@ -32,8 +32,8 @@ export const exform = {
    <div class="row col-12 border-bottom">
    <div class="col-3 bg-primary"><h5>Cervezas</h5></div>
    <div class="col-3 bg-primary"><h5>Cantidad</h5></div>
-   <div class="col-3 bg-primary">Holas</div>
-   <div class="col-3 bg-primary">Holas</div>
+   <div class="col-3 bg-primary"></div>
+   <div class="col-3 bg-primary"></div>
    </div></div`,
    script: ()=>{
     //console.log(cervezas);
@@ -57,8 +57,8 @@ export const exform = {
 
     arraydatos.forEach(e => {
         const op = document.createElement('option');
-        op.value= "gola";
-        op.text="gola";
+        op.value= e;
+        op.text=e;
         select.appendChild(op);
 
 
