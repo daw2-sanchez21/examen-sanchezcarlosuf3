@@ -3,28 +3,37 @@ export const exform = {
     template:  ` <div class='container'>
     <div class="row">
     <div class="col-6">
-    <form id="form-id">
-     <div class="mb-3" id="div">
-       <label for="InputNombre" class="form-label">Nombre del grupo</label>
-       <input type="text" class="form-control" id="Id-nombre" aria-describedby="emailHelp">
-     </div>
-     <div class="mb-3">
-       <label for="InputFecha" class="form-label">Mesa</label>
-       <input type="text" class="form-control" id="Id-mesa">
-     </div>
-     <div class="mb-3">
-       <select id="Id-select">
-            
-       </select>
-     </div>
-     <div class="mb-3">
-       <label for="InputFecha" class="form-label">¿Cuantas te traigo?</label>
-       <input type="text" class="form-control" id="Id-cantidad">
-     </div>
-     <button type="submit" id="Id-boton" class="btn btn-primary">Submit</button>
-     </div>
-     <div class="col-6">
-   </form><div><div id="ficha"><h3>Cerveza</h3><ul id="datos"></ul></div>
+      <form id="form-id" class="needs-validation" novalidate">
+      <div class="mb-3" id="div">
+        <label for="InputNombre" class="form-label">Nombre del grupo</label>
+        <input type="text" class="form-control" id="Id-nombre" aria-describedby="emailHelp" required>
+      <div class="invalid-feedback">
+        Por favor, introduce un nombre de grupo válido.
+      </div>
+      </div>
+      <div class="mb-3">
+    <label for="InputFecha" class="form-label">Mesa</label>
+      <input type="number" class="form-control" id="Id-mesa" aria-describedby="mesaHelp" required>
+    <div class="invalid-feedback">
+       Por favor, introduce un número de mesa válido.
+    </div>
+    </div>
+      <div class="mb-3">
+        <select id="Id-select">
+              
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="InputCantidad" class="form-label">¿Cuantas te traigo?</label>
+      <input type="number" class="form-control" id="Id-cantidad" aria-describedby="cantidadHelp" required>
+      <div class="invalid-feedback">
+        Por favor, introduce una cantidad válida.
+      </div>
+    </div>
+      <button type="submit" id="Id-boton" class="btn btn-primary">Submit</button>
+      </div>
+      <div class="col-6">
+    </form><div><div id="ficha"><h3>Cerveza</h3><ul id="datos"></ul></div>
    </div>
     </div>
    <div class="container mt-4">
@@ -65,21 +74,23 @@ export const exform = {
         console.log(op.id);
     
   })
+    const sub = document.getElementById('Id-boton');
     const form = document.getElementById('form-id');
     form.addEventListener('submit', function(e) {
+        sub.textContent="Submit";
         e.preventDefault();
         cont++;
         console.log("clicks: " +cont);
-        const arraydatos=[];
+        
         const nombre = document.getElementById('Id-nombre');
         const mesa = document.getElementById('Id-mesa');
         const cantidad = document.getElementById('Id-cantidad');
         const table = document.querySelector('#table-id');
 
-        console.log(nombre.value);
-        console.log(mesa.value);
-        console.log(select.value);
-        console.log(cantidad.value);
+        //console.log(nombre.value);
+        //console.log(mesa.value);
+        //console.log(select.value);
+        //console.log(cantidad.value);
 
         const agregar = document.querySelector('#tabla-pedidos');
         const trcerveza = document.createElement('tr');
@@ -110,7 +121,7 @@ export const exform = {
 
         theditar.appendChild(btneditar);
         theliminar.appendChild(btneliminar);
-        thcerveza.textContent=nombre.value;
+        thcerveza.textContent=select.value;
         thcantidad.textContent=cantidad.value;
         agregar.appendChild(trcerveza);
         agregar.appendChild(thcerveza);
@@ -129,6 +140,24 @@ export const exform = {
 
         })
 
+
+        btneditar.addEventListener('click', function(r) {
+          const botonseleccionado2 = r.target.id;
+          console.log("Boton con id: "+botonseleccionado2);
+          const obtener2 = agregar.querySelectorAll("[id='"+botonseleccionado2+"']");
+          console.log(obtener2[0].textContent);
+          select.value=obtener2[0].textContent;
+          cantidad.value=obtener2[1].textContent
+          const sub = document.getElementById('Id-boton');
+          sub.textContent = "Actualizar";
+          obtener2.forEach((o) => {
+            o.remove();
+            })
+
+        })
+
+        
+
       })
         
       
@@ -136,19 +165,28 @@ export const exform = {
         const ficha = document.getElementById('ficha');
         const lista = document.querySelector('#datos');
         const filas = document.createElement('li');
-        
+        let contmau = 0;
+        if(contmau==0){
+          
+          const idBuscado = select.value;
+          const indice = todasLasCervezas.findIndex((cerveza) => cerveza.nombre === idBuscado);
+          console.log(indice);
           filas.textContent=select.value;
+          filas.id=indice;
+          filas.innerHTML="<strong>" +todasLasCervezas[0].nombre +"</strong></br>";
+          filas.innerHTML+="Descripción: </br>" + todasLasCervezas[0].descripcion;
+          filas.innerHTML+="<img src='"+ todasLasCervezas[0].imagen +"' width='150px' height='200px'></img>";
+          contmau = contmau+1;
+        }else{}
           lista.appendChild(filas);
           
           select.addEventListener("change", function(){
-            const idBuscado = select.value;
-            const indice = todasLasCervezas.findIndex((cerveza) => cerveza.nombre === idBuscado);
-            console.log(indice); 
-
-            filas.id=indice;
-            filas.innerHTML="<strong>" +todasLasCervezas[indice].nombre +"</strong></br>";
-            filas.innerHTML+="Descripción: </br>" + todasLasCervezas[indice].descripcion;
-            filas.innerHTML+="<img src='"+ todasLasCervezas[indice].imagen +"' width='150px' height='200px'></img>";
+            const idBuscado2 = select.value;
+            const indice2 = todasLasCervezas.findIndex((cerveza) => cerveza.nombre === idBuscado2);
+            filas.id=indice2;
+            filas.innerHTML="<strong>" +todasLasCervezas[indice2].nombre +"</strong></br>";
+            filas.innerHTML+="Descripción: </br>" + todasLasCervezas[indice2].descripcion;
+            filas.innerHTML+="<img src='"+ todasLasCervezas[indice2].imagen +"' width='150px' height='200px'></img>";
            
           })
 
