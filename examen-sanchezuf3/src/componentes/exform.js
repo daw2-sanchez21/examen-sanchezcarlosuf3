@@ -24,65 +24,134 @@ export const exform = {
      <button type="submit" id="Id-boton" class="btn btn-primary">Submit</button>
      </div>
      <div class="col-6">
-   </form><div><div id="ficha"><h3>Cerveza</h3><ul id="datos"></ul></div><table><tr id="table-id"></tr></table>
+   </form><div><div id="ficha"><h3>Cerveza</h3><ul id="datos"></ul></div>
    </div>
     </div>
-   <div class="container-fluid mt-4">
-   <h1>Esto es lo que has tomado ya ... </h1>
+   <div class="container mt-4">
    <div class="row col-12 border-bottom">
-   <div class="col-3 bg-primary"><h5>Cervezas</h5></div>
-   <div class="col-3 bg-primary"><h5>Cantidad</h5></div>
-   <div class="col-3 bg-primary"></div>
-   <div class="col-3 bg-primary"></div>
-   </div></div`,
+   <table>
+      <thead>
+        <tr>
+          <th>Cerveza</th>
+          <th>Cantidad</th>
+          <th>Editar</th>
+          <th>Borrar</th>
+        </tr>
+      </thead>
+      <tbody id="tabla-pedidos">
+
+      </tbody>
+    </table>
+    </div>
+   </div>
+   </div>`,
    script: ()=>{
     //console.log(cervezas);
     const arraycervezas=[];
+    const todasLasCervezas = cervezas.slice();
     
-    
-
-    for(var i=0; i<=4; i++){
-        arraycervezas[i]=cervezas[i];
-        console.log(arraycervezas);
-    }
-
-    
+    console.log(todasLasCervezas[1]);
+  
     console.log('Vista prueba cargada');
     const select = document.querySelector('#Id-select');
-    const arraydatos=[];
-    arraydatos[0] = "Cerveza 1";
-    arraydatos[1] = "Cerveza 2";
-    arraydatos[2] = "Cerveza 3";
-    arraydatos[3] = "Cerveza 4";
-
-    arraydatos.forEach(e => {
+    
+    let cont=0;
+    todasLasCervezas.forEach(e => {
         const op = document.createElement('option');
-        op.value= e;
-        op.text=e;
+        op.value= e.nombre;
+        op.text=e.nombre;
+        op.id=e.id;
         select.appendChild(op);
-
-
-    })
-
-
+        console.log(op.id);
+    
+  })
     const form = document.getElementById('form-id');
     form.addEventListener('submit', function(e) {
         e.preventDefault();
+        cont++;
+        console.log("clicks: " +cont);
         const arraydatos=[];
         const nombre = document.getElementById('Id-nombre');
         const mesa = document.getElementById('Id-mesa');
         const cantidad = document.getElementById('Id-cantidad');
+        const table = document.querySelector('#table-id');
 
         console.log(nombre.value);
         console.log(mesa.value);
         console.log(select.value);
         console.log(cantidad.value);
 
-
+        const agregar = document.querySelector('#tabla-pedidos');
+        const trcerveza = document.createElement('tr');
+        const thcerveza = document.createElement('th');
+        const thcantidad = document.createElement('th');
+        const theditar = document.createElement('th');
+        const theliminar = document.createElement('th');
+        const btneditar = document.createElement('button')
+        const btneliminar = document.createElement('button')
+        btneditar.id=cont;
+        btneliminar.id=cont;
         
+        btneditar.value="editar";
+        btneditar.textContent="editar";
+        btneditar.classList.add('btn');
+        btneditar.classList.add('btn-warning');
 
+        btneliminar.value="eliminar";
+        btneliminar.textContent="eliminar";
+        btneliminar.classList.add('btn');
+        btneliminar.classList.add('btn-danger');
 
-    })
+        thcerveza.id=cont;
+        thcantidad.id=cont;
+        thcerveza.id=cont;
+        theditar.id=cont;
+        theliminar.id=cont;
+
+        theditar.appendChild(btneditar);
+        theliminar.appendChild(btneliminar);
+        thcerveza.textContent=nombre.value;
+        thcantidad.textContent=cantidad.value;
+        agregar.appendChild(trcerveza);
+        agregar.appendChild(thcerveza);
+        agregar.appendChild(thcantidad);
+        agregar.appendChild(theditar);
+        agregar.appendChild(theliminar);
+
+        btneliminar.addEventListener('click', function(b) {
+          const botonseleccionado = b.target.id;
+          console.log("Boton con id: "+botonseleccionado);
+
+          const filas2 = agregar.querySelectorAll("th[id='"+botonseleccionado+"']");
+          filas2.forEach((fila2) => {
+          fila2.remove();
+          });
+
+        })
+
+      })
+        
+      
+
+        const ficha = document.getElementById('ficha');
+        const lista = document.querySelector('#datos');
+        const filas = document.createElement('li');
+        
+          filas.textContent=select.value;
+          lista.appendChild(filas);
+          
+          select.addEventListener("change", function(){
+            const idBuscado = select.value;
+            const indice = todasLasCervezas.findIndex((cerveza) => cerveza.nombre === idBuscado);
+            console.log(indice); 
+
+            filas.id=indice;
+            filas.innerHTML="<strong>" +todasLasCervezas[indice].nombre +"</strong></br>";
+            filas.innerHTML+="Descripción: </br>" + todasLasCervezas[indice].descripcion;
+            filas.innerHTML+="<img src='"+ todasLasCervezas[indice].imagen +"' width='150px' height='200px'></img>";
+           
+          })
+
 
    }
    
