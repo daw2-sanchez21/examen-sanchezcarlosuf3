@@ -13,4 +13,5 @@ document.querySelector('header').innerHTML = header.template
 document.querySelector('main').innerHTML = home.template
 document.querySelector('main').innerHTML = exform.template
 exform.script();
+document.querySelector('footer').innerHTML = footer.template
 

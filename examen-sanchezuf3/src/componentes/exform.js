@@ -141,34 +141,32 @@ export const exform = {
 
         })
 
-
+//LISTENER PARA DETECTAR EL CLICK SOBRE CADA BOTON EDIATAR. OBTENDRÁ EL ID Y SELECCIONAREMOS TODOS LOS ELEMENTOS CON DICHO ID
+//POSTERIORMENTE MODIFICAREMOS LOS CAMPOS DEL FORM CON LOS DATOS DEL PEDIDO A EDITAR Y ELIMINAREMOS EL PEDIDO PARA AÑADIR EL NUEVO EDITADO
         btneditar.addEventListener('click', function(r) {
+
           const botonseleccionado2 = r.target.id;
-          console.log("Boton con id: "+botonseleccionado2);
           const obtener2 = agregar.querySelectorAll("[id='"+botonseleccionado2+"']");
-          console.log(obtener2[0].textContent);
           select.value=obtener2[0].textContent;
           cantidad.value=obtener2[1].textContent
           const sub = document.getElementById('Id-boton');
           sub.textContent = "Actualizar";
           obtener2.forEach((o) => {
             o.remove();
-            })
-
+          })
         })
-
-        
-
       })
-        
-      
+//SELCCIONAMOS LA LISTA Y CREAMOS LAS FILAS       
 
         const ficha = document.getElementById('ficha');
         const lista = document.querySelector('#datos');
         const filas = document.createElement('li');
+
+//CREAMOS UN IF PARA QUE CUANDO SE CARGUE POR PRIMERA VEZ INYECTE EN EL HTML LA FICHA DE LA CERVEZA POR DEFECTO
+
         let contmau = 0;
         if(contmau==0){
-          
+
           const idBuscado = select.value;
           const indice = todasLasCervezas.findIndex((cerveza) => cerveza.nombre === idBuscado);
           console.log(indice);
@@ -178,9 +176,13 @@ export const exform = {
           filas.innerHTML+="Descripción: </br>" + todasLasCervezas[0].descripcion;
           filas.innerHTML+="<img src='"+ todasLasCervezas[0].imagen +"' width='150px' height='200px'></img>";
           contmau = contmau+1;
+
         }else{}
-          lista.appendChild(filas);
-          
+
+        lista.appendChild(filas);
+
+//DETECTAMOS UN CAMBIO EN EL SELECT Y BUSCAMOS EN EL ARRAY EL INDICE A PARTIR DEL NOMBRE DE LA CERVEZA
+//LE AÑADIMOS EL ID AL ELEMENTO DE LA LISTA E INYECTAMOS LOS DATOS DE LA CERVEZA EN EL HTML
           select.addEventListener("change", function(){
             const idBuscado2 = select.value;
             const indice2 = todasLasCervezas.findIndex((cerveza) => cerveza.nombre === idBuscado2);
@@ -193,7 +195,4 @@ export const exform = {
 
 
    }
-   
- 
- 
- }
+}
