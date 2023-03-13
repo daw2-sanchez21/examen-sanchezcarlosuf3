@@ -1,3 +1,3 @@
 export const footer = {
-    template: `footer`
+    template: `<h3>Footer examen uf3</h3>`
 }
