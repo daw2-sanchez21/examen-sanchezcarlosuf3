@@ -158,7 +158,8 @@ export const exform = {
           let gid = obtener2[0].id;
           select.value=obtener2[0].textContent;
           cantidad.value=obtener2[1].textContent
-
+          
+          
           filas.innerHTML="<strong>" + todasLasCervezas[gid].nombre +"</strong></br>";;
           filas1.innerHTML="Descripción: </br>" + todasLasCervezas[gid].descripcion;
           filas3.innerHTML="<img src='"+ todasLasCervezas[gid].imagen +"' width='150px' height='200px'></img>";
@@ -171,6 +172,7 @@ export const exform = {
           obtener2.forEach((o) => {
             o.remove();
           })
+          
         })
       })
 
