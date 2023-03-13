@@ -8,14 +8,14 @@ export const exform = {
         <label for="InputNombre" class="form-label">Nombre del grupo</label>
         <input type="text" class="form-control" id="Id-nombre" aria-describedby="emailHelp" required>
       <div class="invalid-feedback">
-        Por favor, introduce un nombre de grupo válido.
+        Introduce un nombre de grupo.
       </div>
       </div>
       <div class="mb-3">
     <label for="InputFecha" class="form-label">Mesa</label>
       <input type="number" class="form-control" id="Id-mesa" aria-describedby="mesaHelp" required>
     <div class="invalid-feedback">
-       Por favor, introduce un número de mesa válido.
+       Introduce un número de mesa.
     </div>
     </div>
       <div class="mb-3">
@@ -27,10 +27,10 @@ export const exform = {
         <label for="InputCantidad" class="form-label">¿Cuantas te traigo?</label>
       <input type="number" class="form-control" id="Id-cantidad" aria-describedby="cantidadHelp" required>
       <div class="invalid-feedback">
-        Por favor, introduce una cantidad válida.
+        Introduce la cantidad.
       </div>
     </div>
-      <button type="submit" id="Id-boton" class="btn btn-primary">Enviar</button>
+      <button type="submit" id="Id-boton" class="btn btn-success">Enviar</button>
       </div>
       <div class="col-6">
     </form><div><div id="ficha"><h3>Cerveza</h3><ul id="datos"></ul></div>
@@ -70,6 +70,14 @@ export const exform = {
         console.log(op.id);
     
   })
+  //SELCCIONAMOS LA LISTA Y CREAMOS LAS FILAS       
+
+    const ficha = document.getElementById('ficha');
+    const lista = document.querySelector('#datos');
+    const filas = document.createElement('li');
+    const filas1 = document.createElement('li');
+    const filas3 = document.createElement('li');
+
   //OBTENEMOS EL BOTON ENVIAR Y EL FORMULARIO, CUANDO ENVÍAN EL FORM ACTUALIZAMOS EL NOMBRE POR SI PREVIAMENTE HAN UTILIZADO EL BOTON EDITAR 
   //CREAMOS UN CONTADOR QUE SERÁ EL ID DE CADA PEDIDO Y OBTENEMOS LOS ELEMENTOS NECESARIOS PARA OBTENER LOS DATOS DEL FORM.
     const sub = document.getElementById('Id-boton');
@@ -145,22 +153,28 @@ export const exform = {
 //POSTERIORMENTE MODIFICAREMOS LOS CAMPOS DEL FORM CON LOS DATOS DEL PEDIDO A EDITAR Y ELIMINAREMOS EL PEDIDO PARA AÑADIR EL NUEVO EDITADO
         btneditar.addEventListener('click', function(r) {
 
-          const botonseleccionado2 = r.target.id;
-          const obtener2 = agregar.querySelectorAll("[id='"+botonseleccionado2+"']");
+          let botonseleccionado2 = r.target.id;
+          let obtener2 = agregar.querySelectorAll("[id='"+botonseleccionado2+"']");
+          let gid = obtener2[0].id;
           select.value=obtener2[0].textContent;
           cantidad.value=obtener2[1].textContent
+
+          filas.innerHTML="<strong>" + todasLasCervezas[gid].nombre +"</strong></br>";;
+          filas1.innerHTML="Descripción: </br>" + todasLasCervezas[gid].descripcion;
+          filas3.innerHTML="<img src='"+ todasLasCervezas[gid].imagen +"' width='150px' height='200px'></img>";
+
           const sub = document.getElementById('Id-boton');
           sub.textContent = "Actualizar";
+          sub.classList.remove('btn-success');
+          sub.classList.add('btn-warning');
+
           obtener2.forEach((o) => {
             o.remove();
           })
         })
       })
-//SELCCIONAMOS LA LISTA Y CREAMOS LAS FILAS       
 
-        const ficha = document.getElementById('ficha');
-        const lista = document.querySelector('#datos');
-        const filas = document.createElement('li');
+        
 
 //CREAMOS UN IF PARA QUE CUANDO SE CARGUE POR PRIMERA VEZ INYECTE EN EL HTML LA FICHA DE LA CERVEZA POR DEFECTO
 
@@ -172,14 +186,18 @@ export const exform = {
           console.log(indice);
           filas.textContent=select.value;
           filas.id=indice;
+          filas1.id=indice;
+          filas3.id=indice;
           filas.innerHTML="<strong>" +todasLasCervezas[0].nombre +"</strong></br>";
-          filas.innerHTML+="Descripción: </br>" + todasLasCervezas[0].descripcion;
-          filas.innerHTML+="<img src='"+ todasLasCervezas[0].imagen +"' width='150px' height='200px'></img>";
+          filas1.innerHTML="Descripción: </br>" + todasLasCervezas[0].descripcion;
+          filas3.innerHTML+="<img src='"+ todasLasCervezas[0].imagen +"' width='150px' height='200px'></img>";
           contmau = contmau+1;
 
         }else{}
 
         lista.appendChild(filas);
+        lista.appendChild(filas1);
+        lista.appendChild(filas3);
 
 //DETECTAMOS UN CAMBIO EN EL SELECT Y BUSCAMOS EN EL ARRAY EL INDICE A PARTIR DEL NOMBRE DE LA CERVEZA
 //LE AÑADIMOS EL ID AL ELEMENTO DE LA LISTA E INYECTAMOS LOS DATOS DE LA CERVEZA EN EL HTML
@@ -187,9 +205,11 @@ export const exform = {
             const idBuscado2 = select.value;
             const indice2 = todasLasCervezas.findIndex((cerveza) => cerveza.nombre === idBuscado2);
             filas.id=indice2;
+            filas1.id=indice2;
+            filas3.id=indice2;
             filas.innerHTML="<strong>" +todasLasCervezas[indice2].nombre +"</strong></br>";
-            filas.innerHTML+="Descripción: </br>" + todasLasCervezas[indice2].descripcion;
-            filas.innerHTML+="<img src='"+ todasLasCervezas[indice2].imagen +"' width='150px' height='200px'></img>";
+            filas1.innerHTML="Descripción: </br>" + todasLasCervezas[indice2].descripcion;
+            filas3.innerHTML="<img src='"+ todasLasCervezas[indice2].imagen +"' width='150px' height='200px'></img>";
            
           })
 
